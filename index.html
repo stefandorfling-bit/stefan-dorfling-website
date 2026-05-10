@@ -1067,6 +1067,59 @@
     @media (max-width: 600px) {
       .cs-hero, .cs-body { padding-left: 28px; padding-right: 28px; }
     }
+
+    /* ── Apple-style horizontal scroll for Impact cards on mobile ── */
+    @media (max-width: 768px) {
+      #impact {
+        padding: 60px 0 72px;
+        overflow: hidden;
+      }
+      #impact > div > .section-label {
+        padding: 0 24px;
+      }
+      .stats-grid {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 12px;
+        padding: 0 24px 4px;
+        /* Peek of next card */
+        padding-right: 48px;
+      }
+      .stats-grid::-webkit-scrollbar { display: none; }
+      .stat-card {
+        flex: 0 0 78vw;
+        scroll-snap-align: start;
+        border-radius: 20px !important;
+        padding: 36px 28px;
+      }
+      .stat-number { font-size: 48px !important; }
+
+      /* Pagination dots */
+      .stats-dots {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 20px;
+      }
+      .stats-dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: rgba(45,49,50,0.2);
+        transition: background 0.3s, width 0.3s;
+        cursor: pointer;
+      }
+      .stats-dot.active {
+        background: var(--blue);
+        width: 20px;
+        border-radius: 3px;
+      }
+    }
+    @media (min-width: 769px) {
+      .stats-dots { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -1573,7 +1626,7 @@
 <!-- ─── RECOMMENDATIONS ─── -->
 <section id="recommendations">
   <div class="section-inner">
-    <div class="recs-header ar">
+    <div class="recs-header">
       <div>
         <div class="section-label">What People Say</div>
         <h2 class="section-title">Recommendations</h2>
@@ -1974,20 +2027,18 @@
     if (!ticking) { requestAnimationFrame(onRAF); ticking = true; }
   }, { passive: true });
 
-  /* ── Floating CTA: show when hero buttons leave viewport ── */
-  if (heroCta && floatBtn) {
-    /* Set initial button position below nav */
-  if (floatBtn) floatBtn.style.top = (nav.offsetHeight + 8) + 'px';
-
-  var obs = new IntersectionObserver(function (entries) {
-      if (!entries[0].isIntersecting) {
-        floatBtn.classList.add('visible');
-      } else {
-        floatBtn.classList.remove('visible');
-      }
-    }, { rootMargin: '-40px 0px 0px 0px', threshold: 0 });
-    obs.observe(heroCta);
+  /* ── Floating CTA: show once hero is fully scrolled past ── */
+  function updateFloatBtn() {
+    if (!floatBtn || !heroEl) return;
+    var heroBottom = heroEl.getBoundingClientRect().bottom;
+    if (heroBottom < 0) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
   }
+  window.addEventListener('scroll', updateFloatBtn, { passive: true });
+  updateFloatBtn();
 })();
 </script>
 
@@ -2823,5 +2874,37 @@
     </div>
   </div>
 </div>
+
+<script>
+(function () {
+  var grid = document.querySelector('.stats-grid');
+  var dotsWrap = document.getElementById('stats-dots');
+  if (!grid || !dotsWrap) return;
+
+  var cards = grid.querySelectorAll('.stat-card');
+  var dots = [];
+
+  // Create dots
+  cards.forEach(function (_, i) {
+    var d = document.createElement('div');
+    d.className = 'stats-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', function () {
+      cards[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    });
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  });
+
+  // Update active dot on scroll
+  grid.addEventListener('scroll', function () {
+    var cardW = cards[0] ? cards[0].offsetWidth + 12 : 1;
+    var idx = Math.round(grid.scrollLeft / cardW);
+    idx = Math.max(0, Math.min(idx, dots.length - 1));
+    dots.forEach(function (d, i) {
+      d.classList.toggle('active', i === idx);
+    });
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
