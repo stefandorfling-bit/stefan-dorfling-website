@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+    /* Detect Mobile Safari (not Chrome/Firefox on iOS) and flag on <html> */
+    (function () {
+      var ua = navigator.userAgent;
+      var isIOS = /iPhone|iPad|iPod/i.test(ua);
+      var isSafari = /Safari/i.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS|Chrome/i.test(ua);
+      if (isIOS && isSafari) document.documentElement.classList.add('is-mobile-safari');
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Open Graph / WhatsApp / Instagram preview -->
@@ -1222,7 +1231,8 @@
       .hero-sub { font-size: 15px; }
       .hero-cta { flex-direction: column; align-items: flex-start; gap: 12px; }
       .btn-primary:not(.floating-cta), .btn-ghost { width: 100%; justify-content: center; padding: 16px 24px; font-size: 15px; }
-      .floating-cta { position: fixed !important; top: auto !important; bottom: 28px !important; right: 20px !important; left: auto !important; width: auto !important; padding: 13px 22px !important; font-size: 14px !important; border-radius: 50px !important; box-shadow: 0 6px 24px rgba(194,99,60,0.35) !important; z-index: 500 !important; }
+      /* Hide floating CTA on Mobile Safari only — position:fixed broken there */
+      .is-mobile-safari .floating-cta { display: none !important; }
       .floating-cta { right: 16px; top: 14px !important; padding: 12px 18px; font-size: 13px; }
 
       /* ── Impact ── */
