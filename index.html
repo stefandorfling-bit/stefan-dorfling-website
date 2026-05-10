@@ -747,42 +747,47 @@
        APPLE-STYLE SCROLL & INTERACTION SYSTEM
     ═══════════════════════════════════════════════ */
 
-    /* Base reveal state — everything starts hidden */
+    /* Base reveal — blur + spring easing (Apple-style) */
     .ar {
       opacity: 0;
-      transform: translateY(48px);
-      transition: opacity 0.82s cubic-bezier(0.25,0.46,0.45,0.94),
-                  transform 0.82s cubic-bezier(0.25,0.46,0.45,0.94);
-      will-change: opacity, transform;
+      transform: translateY(52px) scale(1.015);
+      filter: blur(6px);
+      transition: opacity 0.95s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.95s cubic-bezier(0.16,1,0.3,1),
+                  filter 0.8s cubic-bezier(0.16,1,0.3,1);
+      will-change: opacity, transform, filter;
     }
-    .ar.visible { opacity: 1; transform: translateY(0); }
+    .ar.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 
-    /* Slide in from left */
     .ar-left {
-      opacity: 0; transform: translateX(-60px);
-      transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
-                  transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
-      will-change: opacity, transform;
+      opacity: 0; transform: translateX(-72px) scale(1.01);
+      filter: blur(5px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.9s cubic-bezier(0.16,1,0.3,1),
+                  filter 0.75s cubic-bezier(0.16,1,0.3,1);
+      will-change: opacity, transform, filter;
     }
-    .ar-left.visible { opacity: 1; transform: translateX(0); }
+    .ar-left.visible { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
 
-    /* Slide in from right */
     .ar-right {
-      opacity: 0; transform: translateX(60px);
-      transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
-                  transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
-      will-change: opacity, transform;
+      opacity: 0; transform: translateX(72px) scale(1.01);
+      filter: blur(5px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.9s cubic-bezier(0.16,1,0.3,1),
+                  filter 0.75s cubic-bezier(0.16,1,0.3,1);
+      will-change: opacity, transform, filter;
     }
-    .ar-right.visible { opacity: 1; transform: translateX(0); }
+    .ar-right.visible { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
 
-    /* Scale up (for cards, stat numbers) */
     .ar-scale {
-      opacity: 0; transform: scale(0.92);
-      transition: opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94),
-                  transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
-      will-change: opacity, transform;
+      opacity: 0; transform: scale(0.88);
+      filter: blur(8px);
+      transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.85s cubic-bezier(0.16,1,0.3,1),
+                  filter 0.7s cubic-bezier(0.16,1,0.3,1);
+      will-change: opacity, transform, filter;
     }
-    .ar-scale.visible { opacity: 1; transform: scale(1); }
+    .ar-scale.visible { opacity: 1; transform: scale(1); filter: blur(0); }
 
     /* Stagger delays */
     .ar-d1  { transition-delay: 0.08s !important; }
@@ -794,14 +799,16 @@
 
     /* ── Card lift on hover ── */
     .stat-card, .skill-group, .mentor-card, .edu-card, .trajectory-card {
-      transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94),
-                  box-shadow 0.35s cubic-bezier(0.25,0.46,0.45,0.94),
-                  background 0.2s ease,
-                  border-color 0.2s ease !important;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+                  box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),
+                  background 0.25s ease,
+                  filter 0.4s ease,
+                  border-color 0.25s ease !important;
     }
     .stat-card:hover, .skill-group:hover, .mentor-card:hover, .edu-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 48px rgba(45,49,50,0.13) !important;
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 24px 56px rgba(45,49,50,0.15), 0 0 0 1px rgba(194,99,60,0.1) !important;
+      filter: brightness(1.02);
     }
 
     /* ── Section title cinematic reveal ── */
@@ -1119,6 +1126,138 @@
     }
     @media (min-width: 769px) {
       .stats-dots { display: none; }
+    }
+
+    /* ── Ambient section glows ── */
+    #about {
+      background: radial-gradient(ellipse 70% 50% at 20% 60%, rgba(194,99,60,0.05) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 40% at 80% 30%, rgba(62,74,61,0.04) 0%, transparent 50%),
+                  var(--navy);
+    }
+    #skills {
+      background: radial-gradient(ellipse 80% 60% at 80% 50%, rgba(217,197,178,0.08) 0%, transparent 60%),
+                  var(--navy);
+    }
+    #mentorship {
+      background: radial-gradient(ellipse 70% 50% at 30% 50%, rgba(194,99,60,0.06) 0%, transparent 60%),
+                  var(--navy-mid);
+    }
+
+    /* ── Section title gradient shimmer ── */
+    .section-title {
+      background: linear-gradient(135deg, #2D3132 0%, rgba(45,49,50,0.55) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Stat number glow on hover ── */
+    .stat-card:hover .stat-number span {
+      text-shadow: 0 0 20px rgba(194,99,60,0.3);
+    }
+
+    /* ── Card inner top highlight ── */
+    .stat-card::after {
+      content: '';
+      position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .stat-card:hover::after { opacity: 1; }
+
+    /* ── Btn pulse glow on hover ── */
+    .btn-primary:hover {
+      box-shadow: 0 8px 24px rgba(194,99,60,0.4), 0 0 0 4px rgba(194,99,60,0.1) !important;
+    }
+
+    /* ════════════════════════════════════════
+       MOBILE OPTIMISATION
+    ════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      /* Show hero photo on mobile as circular portrait */
+      .hero-photo {
+        position: relative !important;
+        width: 96px !important; height: 96px !important;
+        border-radius: 50% !important;
+        right: auto !important; top: auto !important;
+        transform: none !important;
+        margin-bottom: 24px;
+        box-shadow: 0 8px 32px rgba(45,49,50,0.15) !important;
+        flex-shrink: 0;
+        order: -1;
+      }
+      .hero-photo img {
+        animation: none !important;
+        filter: none !important;
+        border-radius: 50%;
+      }
+      .hero-photo::before, .hero-photo::after { display: none; }
+      #hero {
+        padding: 100px 28px 72px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* ── Nav ── */
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+
+      /* ── Hero ── */
+      .hero-eyebrow { font-size: 11px; }
+      #hero h1 { font-size: clamp(44px, 12vw, 72px); }
+      .hero-sub { font-size: 15px; }
+      .hero-cta { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .btn-primary, .btn-ghost { width: 100%; justify-content: center; padding: 16px 24px; font-size: 15px; }
+      .floating-cta { right: 16px; top: 14px !important; padding: 12px 18px; font-size: 13px; }
+
+      /* ── Impact ── */
+      #impact { padding: 48px 0 60px; }
+
+      /* ── Sections ── */
+      section { padding: 72px 24px; }
+      .section-title { font-size: clamp(30px, 8vw, 48px); }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .section-header { flex-direction: column; gap: 12px; }
+      .section-desc { max-width: 100%; }
+
+      /* ── Experience ── */
+      .exp-item { padding: 0 0 48px 28px; }
+      .exp-item:hover { padding-left: 28px; }
+      .exp-achievements { flex-direction: column; }
+      .achievement-pill { justify-content: flex-start; }
+
+      /* ── Skills grid ── */
+      .skills-grid { grid-template-columns: 1fr; }
+
+      /* ── Brands ── */
+      .brands-arena { height: 400px; }
+
+      /* ── Mentor / edu grids ── */
+      .mentor-grid, .edu-grid { grid-template-columns: 1fr; }
+
+      /* ── Featured ── */
+      .featured-grid { grid-template-columns: 1fr; }
+
+      /* ── Booking ── */
+      .booking-header { padding: 24px 20px 20px; flex-direction: column; align-items: flex-start; }
+      .booking-header h3 { font-size: 20px; }
+
+      /* ── Recommendations ── */
+      #recommendations { padding-left: 0; padding-right: 0; }
+      #recommendations .recs-header { padding: 0 24px 0; }
+      .rec-card { flex: 0 0 85vw; padding: 28px 24px; }
+
+      /* ── Contact ── */
+      #contact { padding: 80px 24px; }
+      .contact-links { flex-direction: column; align-items: stretch; }
+      .contact-links a { text-align: center; justify-content: center; }
+
+      /* ── Footer ── */
+      footer { padding: 24px 20px; flex-direction: column; gap: 8px; font-size: 12px; }
+
+      /* ── Trajectory card ── */
+      .trajectory-card + div { display: none; }
     }
   </style>
 </head>
@@ -1996,8 +2135,8 @@
     const sy = window.scrollY;
     const heroH = heroEl ? heroEl.offsetHeight : 800;
 
-    /* Parallax: photo drifts down at 30% scroll speed */
-    if (heroPhoto && sy < heroH) {
+    /* Parallax: photo drifts down at 30% scroll speed — desktop only */
+    if (heroPhoto && sy < heroH && window.innerWidth > 1024) {
       heroPhoto.style.transform =
         'translateY(calc(-50% + ' + (sy * 0.28).toFixed(1) + 'px))';
     }
@@ -2405,7 +2544,7 @@
 /* ── Cinematic photo — pure sine wave, zero keyframe stepping ── */
 (function () {
   var img = document.querySelector('.hero-photo img');
-  if (!img) return;
+  if (!img || window.innerWidth <= 1024) return;
 
   var t0 = null;
 
@@ -2904,6 +3043,42 @@
       d.classList.toggle('active', i === idx);
     });
   }, { passive: true });
+})();
+</script>
+
+<script>
+/* ── 3D card tilt on hover (desktop only) ── */
+(function () {
+  if (window.innerWidth <= 1024) return;
+  var TILT = 7;
+  var cards = document.querySelectorAll('.stat-card, .skill-group, .mentor-card, .edu-card, .featured-card, .booking-card');
+  cards.forEach(function (card) {
+    card.style.transition += ', transform 0.25s cubic-bezier(0.16,1,0.3,1)';
+    card.addEventListener('mousemove', function (e) {
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width  - 0.5;
+      var y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform = 'translateY(-8px) scale(1.01) perspective(700px) rotateX(' + (-y * TILT) + 'deg) rotateY(' + (x * TILT) + 'deg)';
+    });
+    card.addEventListener('mouseleave', function () {
+      card.style.transform = '';
+    });
+  });
+})();
+
+/* ── Scroll-linked section vibrancy: slightly scale/brighten active section ── */
+(function () {
+  var sections = document.querySelectorAll('section, #impact');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      entry.target.style.transition = 'filter 0.6s ease';
+      entry.target.style.filter = entry.isIntersecting ? 'brightness(1)' : 'brightness(0.97)';
+    });
+  }, { threshold: 0.15 });
+  sections.forEach(function (s) {
+    s.style.filter = 'brightness(0.97)';
+    obs.observe(s);
+  });
 })();
 </script>
 </body>
