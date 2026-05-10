@@ -1245,7 +1245,15 @@
       .skills-grid { grid-template-columns: 1fr; }
 
       /* ── Brands ── */
-      .brands-arena { height: 400px; }
+      #brands { padding-left: 0; padding-right: 0; }
+      #brands .section-inner { padding: 0 24px; }
+      #brands .section-inner > .section-header { padding: 0 24px; }
+      .brands-arena {
+        height: 500px;
+        border-radius: 0;
+        margin: 0;
+        width: 100%;
+      }
 
       /* ── Mentor / edu grids ── */
       .mentor-grid, .edu-grid { grid-template-columns: 1fr; }
@@ -2752,15 +2760,36 @@
     // Close button
     var btn = overlay.querySelector('[id$="-close"]');
     if (btn) btn.addEventListener('click', function () { closeModal(overlay); });
-    // Click outside
+
+    // Click/tap outside modal
     overlay.addEventListener('click', function (e) {
       var modal = overlay.querySelector('.cs-modal');
       if (modal && !modal.contains(e.target)) closeModal(overlay);
     });
+
     // Escape key
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal(overlay);
     });
+
+    // Swipe-down to close (mobile)
+    var touchStartY = 0;
+    var touchStartX = 0;
+    var modal = overlay.querySelector('.cs-modal');
+    if (modal) {
+      modal.addEventListener('touchstart', function (e) {
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      modal.addEventListener('touchend', function (e) {
+        var dy = e.changedTouches[0].clientY - touchStartY;
+        var dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+        // Swipe down > 90px and more vertical than horizontal
+        if (dy > 90 && dx < dy) {
+          closeModal(overlay);
+        }
+      }, { passive: true });
+    }
   });
 })();
 </script>
