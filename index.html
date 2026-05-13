@@ -772,23 +772,53 @@ if(window.innerWidth <= 768){
       /* ── Nav ── */
       .nav-links-new { display: none !important; }
       .site-nav { padding: 14px 20px !important; }
-      /* Hide Book a Call in nav while hero CTA is visible */
-      .site-nav.on-hero .nav-cta-new {
-        opacity: 0 !important;
-        pointer-events: none !important;
-        transition: opacity 0.3s ease !important;
+      
+
+
+    @media (max-width: 768px) {
+      /* Prevent ANY visual change on hero during scroll */
+      #hero, #hero *, #hero-bg-mobile, #hero-bg-mobile img {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        will-change: auto !important;
       }
-      /* Fade it back in once nav gets glass background */
-      .site-nav.on-content .nav-cta-new {
-        opacity: 1 !important;
-        pointer-events: auto !important;
-        transition: opacity 0.3s ease !important;
+      /* Card animates in once only — then locks */
+      .hero-mobile-card {
+        animation: cardUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.55s both !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* On hero: no background, no Book a Call */
+      .site-nav.on-hero {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+        border-bottom: none !important;
+      }
+      .site-nav.on-hero .nav-cta-new {
+        display: none !important;
       }
 
+      /* Scrolled past hero: subtle translucent background + Book a Call appears */
+      .site-nav.on-content {
+        background: rgba(28, 13, 6, 0.72) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        box-shadow: 0 1px 20px rgba(0,0,0,0.15) !important;
+      }
+      .site-nav.on-content .nav-cta-new {
+        display: inline-flex !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
     }
 
   </style>
 <!-- v:2026-05-13 18:08 -->
+
+<!-- build:2026-05-13 18:16:46 -->
 </head>
 <body>
 
