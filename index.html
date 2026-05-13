@@ -332,9 +332,7 @@ if(window.innerWidth <= 768){
 
       /* Flex layout so card stays in flow, overflow:hidden prevents bleed */
       #hero { display: flex !important; flex-direction: column !important; justify-content: flex-end !important; overflow: hidden !important; }
-      /* Use child img for hero bg on mobile — prevents crop shift on scroll */
-      #hero-bg-mobile { display: block !important; }
-      #hero { background-image: none !important; }
+
 
 
       /* Hide desktop hero content on mobile */
@@ -815,10 +813,22 @@ if(window.innerWidth <= 768){
       }
     }
 
+
+    @media (max-width: 768px) {
+      /* Ensure hero bg image shows — never suppress it */
+      #hero { background-image: unset; }
+      #hero-bg-mobile { display: block !important; }
+      #hero-bg-mobile img {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+
   </style>
 <!-- v:2026-05-13 18:08 -->
 
-<!-- build:2026-05-13 18:18:43 -->
+<!-- build:2026-05-13 18:20:45 -->
 </head>
 <body>
 
