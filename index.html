@@ -318,8 +318,8 @@
       }
       #logos { border-radius: 0; box-shadow: none; }
 
-      /* Flex layout so card stays in flow */
-      #hero { display: flex !important; flex-direction: column !important; justify-content: flex-end !important; }
+      /* Flex layout so card stays in flow, overflow:hidden prevents bleed */
+      #hero { display: flex !important; flex-direction: column !important; justify-content: flex-end !important; overflow: hidden !important; }
 
       /* Hide desktop hero content on mobile */
       .hero-content { display: none !important; }
@@ -1920,11 +1920,11 @@ document.addEventListener('keydown', function(e) {
     if(sy > hh) return;
     var p = sy / hh;
     // Scale up slightly + fade out as you scroll down
-    var scale = 1 + p * 0.08;
-    var opacity = 1 - p * 0.6;
+    var scale = 1 - p * 0.06;
+    var opacity = 1 - p * 0.55;
     hero.style.transform = 'scale(' + scale.toFixed(3) + ')';
     hero.style.opacity = opacity.toFixed(3);
-    hero.style.transformOrigin = 'center top';
+    hero.style.transformOrigin = 'center center';
   }
   window.addEventListener('scroll', onScroll, {passive:true});
 })();
