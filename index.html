@@ -1746,8 +1746,9 @@ document.addEventListener('keydown', function(e) {
   if(!nav || !hero) return;
 
   function updateNav(){
-    var heroBottom = hero.getBoundingClientRect().bottom;
-    if(heroBottom > 80){
+    // Hero is sticky so use scrollY — switch once scrolled past hero height
+    var threshold = hero.offsetHeight - 60;
+    if(window.scrollY < threshold){
       nav.classList.add('on-hero');
       nav.classList.remove('on-content');
     } else {
