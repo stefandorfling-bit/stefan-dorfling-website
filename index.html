@@ -296,15 +296,17 @@
       }
 
 
-      /* Smooth fade-in — opacity only, no scale/position jump */
-      @keyframes heroFadeIn {
-        0%   { opacity: 0; }
-        100% { opacity: 1; }
+      /* Fade-in */
+      @keyframes heroFadeIn { from { opacity:0; } to { opacity:1; } }
+      #hero { animation: heroFadeIn 0.8s ease both; }
+
+      /* Card slide-up from bottom into flex layout */
+      @keyframes cardUp {
+        from { opacity:0; transform: translateY(28px); }
+        to   { opacity:1; transform: translateY(0); }
       }
-      #hero { animation: heroFadeIn 0.9s ease 0s both; }
-      /* Card delayed slightly after photo appears */
       .hero-mobile-card {
-        animation: slideUpCard 0.9s cubic-bezier(0.16,1,0.3,1) 0.6s forwards !important;
+        animation: cardUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.55s both !important;
       }
 
       /* Disable slide-over for mobile */
@@ -316,26 +318,30 @@
       }
       #logos { border-radius: 0; box-shadow: none; }
 
+      /* Flex layout so card stays in flow */
+      #hero { display: flex !important; flex-direction: column !important; justify-content: flex-end !important; }
+
       /* Hide desktop hero content on mobile */
       .hero-content { display: none !important; }
 
-      /* Mobile bottom card — fits in viewport */
+      /* Mobile bottom card — in flow, guaranteed to fit */
       .hero-mobile-card {
         display: flex !important;
-        position: absolute;
-        bottom: 0; left: 12px; right: 12px;
-        background: rgba(255,255,255,0.98);
+        position: relative !important;
+        margin: 0 12px 12px !important;
+        flex-shrink: 0 !important;
+        background: rgba(255,255,255,0.97);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
-        border-radius: 24px 24px 16px 16px;
-        padding: 16px 24px calc(20px + env(safe-area-inset-bottom, 12px));
+        border-radius: 24px;
+        padding: 14px 24px calc(16px + env(safe-area-inset-bottom, 8px));
         flex-direction: column;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
         z-index: 5;
-        box-shadow: 0 -4px 32px rgba(0,0,0,0.12);
-        transform: translateY(100%);
-        animation: slideUpCard 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+        box-shadow: 0 4px 32px rgba(0,0,0,0.14);
+        opacity: 0;
+        transform: translateY(28px);
       }
       @keyframes slideUpCard {
         to { transform: translateY(0); }
@@ -355,7 +361,7 @@
       /* Card headline */
       .hero-card-title {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 38px; font-weight: 700;
+        font-size: 32px; font-weight: 700;
         color: #2D3132; text-align: center;
         line-height: 1.05; letter-spacing: -0.01em;
       }
