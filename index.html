@@ -776,16 +776,16 @@ if(window.innerWidth <= 768){
 
 
     @media (max-width: 768px) {
-      /* Prevent ANY visual change on hero during scroll */
-      #hero, #hero *, #hero-bg-mobile, #hero-bg-mobile img {
+      /* Only kill animation on the bg image — NOT the card */
+      #hero-bg-mobile img {
         animation: none !important;
         transition: none !important;
         transform: none !important;
         will-change: auto !important;
       }
-      /* Card animates in once only — then locks */
-      .hero-mobile-card {
-        animation: cardUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.55s both !important;
+      #hero {
+        transition: none !important;
+        will-change: auto !important;
       }
     }
 
@@ -818,7 +818,7 @@ if(window.innerWidth <= 768){
   </style>
 <!-- v:2026-05-13 18:08 -->
 
-<!-- build:2026-05-13 18:16:46 -->
+<!-- build:2026-05-13 18:18:43 -->
 </head>
 <body>
 
