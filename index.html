@@ -284,31 +284,45 @@
 
     /* ════ MOBILE HERO — bottom card slide-up ════ */
     @media (max-width: 768px) {
+      /* Mobile: no sticky — parallax exit instead */
       #hero {
+        position: relative !important;
         height: 100vh !important;
         min-height: 100vh !important;
-        background-position: 72% center !important;
+        background-position: 62% center !important;
         background-size: cover !important;
+        overflow: hidden;
       }
+
+      /* Disable slide-over for mobile */
+      #logos, #stats, #about, #traj, #experience,
+      #skills, #mentorship, #featured, #education,
+      #recommendations, #booking, #cta {
+        position: relative;
+        z-index: auto;
+      }
+      #logos { border-radius: 0; box-shadow: none; }
 
       /* Hide desktop hero content on mobile */
       .hero-content { display: none !important; }
 
-      /* Mobile bottom card */
+      /* Mobile bottom card — floating modal style */
       .hero-mobile-card {
         display: flex !important;
         position: absolute;
-        bottom: 0; left: 0; right: 0;
-        background: #fff;
-        border-radius: 24px 24px 0 0;
-        padding: 20px 28px 48px;
+        bottom: 24px; left: 16px; right: 16px;
+        background: rgba(255,255,255,0.97);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 20px 24px 28px;
         flex-direction: column;
         align-items: center;
         gap: 12px;
         z-index: 5;
-        box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
-        transform: translateY(100%);
-        animation: slideUpCard 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.3);
+        transform: translateY(120%);
+        animation: slideUpCard 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
       }
       @keyframes slideUpCard {
         to { transform: translateY(0); }
@@ -1876,6 +1890,29 @@ document.addEventListener('keydown', function(e) {
       t.scrollIntoView({behavior:'smooth', block:'start'});
     });
   });
+})();
+</script>
+
+
+<script>
+/* Mobile parallax exit on hero scroll */
+(function(){
+  if(window.innerWidth > 768) return;
+  var hero = document.getElementById('hero');
+  if(!hero) return;
+  var hh = hero.offsetHeight;
+  function onScroll(){
+    var sy = window.scrollY;
+    if(sy > hh) return;
+    var p = sy / hh;
+    // Scale up slightly + fade out as you scroll down
+    var scale = 1 + p * 0.08;
+    var opacity = 1 - p * 0.6;
+    hero.style.transform = 'scale(' + scale.toFixed(3) + ')';
+    hero.style.opacity = opacity.toFixed(3);
+    hero.style.transformOrigin = 'center top';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
 })();
 </script>
 
