@@ -319,7 +319,7 @@
       /* Hide desktop hero content on mobile */
       .hero-content { display: none !important; }
 
-      /* Mobile bottom card — prominent modal like inspiration */
+      /* Mobile bottom card — fits in viewport */
       .hero-mobile-card {
         display: flex !important;
         position: absolute;
@@ -327,17 +327,15 @@
         background: rgba(255,255,255,0.98);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
-        border-radius: 28px 28px 20px 20px;
-        padding: 18px 28px 44px;
+        border-radius: 24px 24px 16px 16px;
+        padding: 16px 24px calc(20px + env(safe-area-inset-bottom, 12px));
         flex-direction: column;
         align-items: center;
-        gap: 16px;
+        gap: 14px;
         z-index: 5;
-        box-shadow: 0 -4px 40px rgba(0,0,0,0.15);
+        box-shadow: 0 -4px 32px rgba(0,0,0,0.12);
         transform: translateY(100%);
         animation: slideUpCard 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
-        min-height: 42vh;
-        justify-content: center;
       }
       @keyframes slideUpCard {
         to { transform: translateY(0); }
@@ -369,9 +367,7 @@
       }
 
       /* Card CTA */
-      .hero-card-cta {
-        display: flex; gap: 10px; width: 100%; margin-top: 4px;
-      }
+      .hero-card-cta { display: none; }
       .hero-card-btn-primary {
         flex: 1; padding: 17px;
         background: #2D3132; color: #F5EDE5;
@@ -715,10 +711,7 @@
       <em>Growth &amp; Product Leader</em>
     </div>
     <p class="hero-card-sub">Senior Growth PM · €6.5M ROI · Berlin · Building toward Head of Growth</p>
-    <div class="hero-card-cta">
-      <a href="#stats" class="hero-card-btn-primary">View my work</a>
-      <a href="mailto:stefandorfling@gmail.com" class="hero-card-btn-secondary">Get in touch</a>
-    </div>
+    <a href="#booking" class="hero-card-btn-primary" style="width:100%;text-align:center;background:#C2633C;color:#fff;padding:16px;border-radius:100px;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;text-decoration:none;display:block;">Book a Call</a>
   </div>
 
 </section>
