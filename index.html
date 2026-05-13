@@ -772,6 +772,19 @@
       /* ── Nav ── */
       .nav-links-new { display: none !important; }
       .site-nav { padding: 14px 20px !important; }
+      /* Hide Book a Call in nav while hero CTA is visible */
+      .site-nav.on-hero .nav-cta-new {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity 0.3s ease !important;
+      }
+      /* Fade it back in once nav gets glass background */
+      .site-nav.on-content .nav-cta-new {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        transition: opacity 0.3s ease !important;
+      }
+
     }
 
   </style>
