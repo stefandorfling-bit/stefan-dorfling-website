@@ -281,6 +281,95 @@
       box-shadow: 0 -4px 40px rgba(45,49,50,0.15);
     }
 
+
+    /* ════ MOBILE HERO — bottom card slide-up ════ */
+    @media (max-width: 768px) {
+      #hero {
+        height: 100vh !important;
+        min-height: 100vh !important;
+        background-position: 72% center !important;
+        background-size: cover !important;
+      }
+
+      /* Hide desktop hero content on mobile */
+      .hero-content { display: none !important; }
+
+      /* Mobile bottom card */
+      .hero-mobile-card {
+        display: flex !important;
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        background: #fff;
+        border-radius: 24px 24px 0 0;
+        padding: 20px 28px 48px;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        z-index: 5;
+        box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+        transform: translateY(100%);
+        animation: slideUpCard 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+      }
+      @keyframes slideUpCard {
+        to { transform: translateY(0); }
+      }
+
+      /* Dots indicator */
+      .hero-card-dots {
+        display: flex; gap: 8px; align-items: center; margin-bottom: 4px;
+      }
+      .hero-card-dot {
+        height: 6px; border-radius: 3px; background: #D0CCC8;
+        transition: width 0.3s, background 0.3s;
+      }
+      .hero-card-dot.active { width: 24px; background: #C2633C; }
+      .hero-card-dot:not(.active) { width: 6px; }
+
+      /* Card headline */
+      .hero-card-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 32px; font-weight: 700;
+        color: #2D3132; text-align: center;
+        line-height: 1.1; letter-spacing: -0.01em;
+      }
+      .hero-card-title em { font-style: italic; color: #C2633C; font-weight: 300; }
+      .hero-card-sub {
+        font-size: 13px; color: #8A7F78;
+        text-align: center; line-height: 1.6;
+        max-width: 280px;
+      }
+
+      /* Card CTA */
+      .hero-card-cta {
+        display: flex; gap: 10px; width: 100%; margin-top: 4px;
+      }
+      .hero-card-btn-primary {
+        flex: 1; padding: 15px;
+        background: #2D3132; color: #F5EDE5;
+        border: none; border-radius: 100px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px; font-weight: 700;
+        text-align: center; text-decoration: none;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .hero-card-btn-primary:hover { background: #C2633C; }
+      .hero-card-btn-secondary {
+        padding: 15px 20px;
+        background: transparent; color: #2D3132;
+        border: 1.5px solid rgba(45,49,50,0.2);
+        border-radius: 100px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px; font-weight: 600;
+        text-decoration: none; white-space: nowrap;
+        transition: border-color 0.2s;
+      }
+      .hero-card-btn-secondary:hover { border-color: #C2633C; color: #C2633C; }
+    }
+
+    /* Hide mobile card on desktop */
+    .hero-mobile-card { display: none; }
+
     /* ════ SHARED NEW SECTION STYLES ════ */
     .ns-section { padding: 100px 80px; }
     .ns-section.dark { background: #2D3132; }
@@ -584,6 +673,25 @@
       <div><div class="mini-stat-num">12</div><div class="mini-stat-lbl">Brands Built With</div></div>
     </div>
   </div>
+
+  <!-- Mobile-only bottom card -->
+  <div class="hero-mobile-card">
+    <div class="hero-card-dots">
+      <div class="hero-card-dot active"></div>
+      <div class="hero-card-dot"></div>
+      <div class="hero-card-dot"></div>
+    </div>
+    <div class="hero-card-title">
+      Stefan Dorfling<br/>
+      <em>Growth &amp; Product Leader</em>
+    </div>
+    <p class="hero-card-sub">Senior Growth PM · €6.5M ROI · Berlin · Building toward Head of Growth</p>
+    <div class="hero-card-cta">
+      <a href="#stats" class="hero-card-btn-primary">View my work</a>
+      <a href="mailto:stefandorfling@gmail.com" class="hero-card-btn-secondary">Get in touch</a>
+    </div>
+  </div>
+
 </section>
 
 <!-- ═══ LOGOS BAR ═══ -->
