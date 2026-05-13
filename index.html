@@ -195,11 +195,11 @@
     }
     /* Over dark hero — transparent */
     .site-nav.on-hero { background: transparent; }
-    /* Over light content — frosted white */
+    /* Over content — 50% terracotta */
     .site-nav.on-content {
-      background: rgba(255,255,255,0.94);
+      background: rgba(194,99,60,0.5);
       backdrop-filter: blur(16px);
-      box-shadow: 0 1px 24px rgba(45,49,50,0.08);
+      box-shadow: 0 1px 24px rgba(45,49,50,0.1);
     }
     .nav-logo-new {
       font-family: 'Montserrat', sans-serif;
@@ -209,7 +209,7 @@
       transition: color 0.3s;
     }
     .on-hero .nav-logo-new { color: #fff; }
-    .on-content .nav-logo-new { color: #2D3132; }
+    .on-content .nav-logo-new { color: #fff; }
     .nav-links-new {
       display: flex; gap: 32px; list-style: none;
     }
@@ -220,8 +220,8 @@
     }
     .on-hero .nav-links-new a { color: rgba(255,255,255,0.75); }
     .on-hero .nav-links-new a:hover { color: #fff; opacity: 1; }
-    .on-content .nav-links-new a { color: #6A6560; }
-    .on-content .nav-links-new a:hover { color: #2D3132; }
+    .on-content .nav-links-new a { color: rgba(255,255,255,0.85); }
+    .on-content .nav-links-new a:hover { color: #fff; }
     .nav-cta-new {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 11px 24px; border-radius: 100px;
@@ -231,8 +231,8 @@
     }
     .on-hero .nav-cta-new { background: #fff; color: #C2633C; }
     .on-hero .nav-cta-new:hover { background: rgba(255,255,255,0.9); transform: translateY(-1px); }
-    .on-content .nav-cta-new { background: #2D3132; color: #F5EDE5; }
-    .on-content .nav-cta-new:hover { background: #C2633C; transform: translateY(-1px); }
+    .on-content .nav-cta-new { background: #fff; color: #C2633C; }
+    .on-content .nav-cta-new:hover { background: rgba(255,255,255,0.9); transform: translateY(-1px); }
     /* Mobile: hide nav-links, show burger */
     .nav-burger {
       display: none; flex-direction: column; gap: 5px;
@@ -243,7 +243,7 @@
       border-radius: 2px; transition: transform 0.3s, opacity 0.2s;
     }
     .on-hero .nav-burger span { background: #fff; }
-    .on-content .nav-burger span { background: #2D3132; }
+    .on-content .nav-burger span { background: #fff; }
     @media (max-width: 900px) {
       .nav-links-new { display: none; }
       .nav-burger { display: flex; }
