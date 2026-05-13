@@ -323,33 +323,46 @@
       /* Hide desktop hero content on mobile */
       .hero-content { display: none !important; }
 
-      /* Mobile bottom card — always within dvh viewport */
+      /* Mobile card — iOS bottom sheet style, raised 10% from bottom */
       .hero-mobile-card {
         display: flex !important;
         position: relative !important;
-        margin: 0 12px calc(env(safe-area-inset-bottom, 8px) + 8px) !important;
+        margin: 0 0 8vh 0 !important;
         flex-shrink: 0 !important;
-        background: rgba(255,255,255,0.97);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border-radius: 24px;
-        padding: 16px 24px 20px;
+        background: rgba(255,255,255,0.96);
+        backdrop-filter: saturate(180%) blur(28px);
+        -webkit-backdrop-filter: saturate(180%) blur(28px);
+        border-radius: 20px;
+        padding: 10px 24px calc(20px + env(safe-area-inset-bottom, 0px));
         flex-direction: column;
         align-items: center;
         gap: 10px;
         z-index: 5;
-        box-shadow: 0 4px 32px rgba(0,0,0,0.14);
+        box-shadow:
+          0 0 0 0.5px rgba(0,0,0,0.08),
+          0 8px 32px rgba(0,0,0,0.12),
+          0 2px 8px rgba(0,0,0,0.06);
         opacity: 0;
         transform: translateY(28px);
+        width: calc(100% - 24px) !important;
+        align-self: center !important;
+      }
+      /* iOS handle bar */
+      .hero-mobile-card::before {
+        content: '';
+        display: block;
+        width: 36px; height: 4px;
+        background: rgba(60,60,67,0.18);
+        border-radius: 2px;
+        margin-bottom: 4px;
+        flex-shrink: 0;
       }
       @keyframes slideUpCard {
         to { transform: translateY(0); }
       }
 
       /* Dots indicator */
-      .hero-card-dots {
-        display: flex; gap: 8px; align-items: center; margin-bottom: 4px;
-      }
+      .hero-card-dots { display: none; }
       .hero-card-dot {
         height: 5px; border-radius: 3px; background: #D0CCC8;
         transition: width 0.3s, background 0.3s;
@@ -359,16 +372,16 @@
 
       /* Card headline */
       .hero-card-title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 28px; font-weight: 700;
-        color: #2D3132; text-align: center;
-        line-height: 1.05; letter-spacing: -0.01em;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 22px; font-weight: 700;
+        color: #1C1C1E; text-align: center;
+        line-height: 1.15; letter-spacing: -0.02em;
       }
       .hero-card-title em { font-style: italic; color: #C2633C; font-weight: 300; }
       .hero-card-sub {
-        font-size: 12px; color: #8A7F78;
+        font-size: 13px; color: #6C6C70;
         text-align: center; line-height: 1.5;
-        max-width: 280px;
+        max-width: 280px; font-weight: 400;
       }
 
       /* Card CTA */
@@ -794,17 +807,12 @@
 
   <!-- Mobile-only bottom card -->
   <div class="hero-mobile-card">
-    <div class="hero-card-dots">
-      <div class="hero-card-dot active"></div>
-      <div class="hero-card-dot"></div>
-      <div class="hero-card-dot"></div>
-    </div>
-    <div class="hero-card-title">
+<div class="hero-card-title">
       Stefan Dorfling<br/>
       <em>Growth &amp; Product Leader</em>
     </div>
     <p class="hero-card-sub">Senior Growth PM · €6.5M ROI · Berlin · Building toward Head of Growth</p>
-    <a href="#booking" class="hero-card-btn-primary" style="width:100%;text-align:center;background:#C2633C;color:#fff;padding:14px;border-radius:100px;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;text-decoration:none;display:block;">Book a Call</a>
+    <a href="#booking" class="hero-card-btn-primary" style="width:100%;text-align:center;background:#C2633C;color:#fff;padding:14px;border-radius:14px;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:600;text-decoration:none;display:block;letter-spacing:-0.01em;">Book a Call</a>
   </div>
 
 </section>
@@ -1995,27 +2003,7 @@ document.addEventListener('keydown', function(e) {
 </script>
 
 
-<script>
-/* Mobile parallax exit on hero scroll */
-(function(){
-  if(window.innerWidth > 768) return;
-  var hero = document.getElementById('hero');
-  if(!hero) return;
-  var hh = hero.offsetHeight;
-  function onScroll(){
-    var sy = window.scrollY;
-    if(sy > hh) return;
-    var p = sy / hh;
-    // Scale up slightly + fade out as you scroll down
-    var scale = 1 - p * 0.06;
-    var opacity = 1 - p * 0.55;
-    hero.style.transform = 'scale(' + scale.toFixed(3) + ')';
-    hero.style.opacity = opacity.toFixed(3);
-    hero.style.transformOrigin = 'center center';
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-})();
-</script>
+<!-- parallax removed -->
 
 </body>
 </html>
