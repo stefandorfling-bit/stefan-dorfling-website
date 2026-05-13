@@ -181,6 +181,92 @@
     .btn-wh:hover{transform:translateY(-2px);}
 
 
+
+    /* ════ NAV ════ */
+    .site-nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+    }
+    /* Over dark hero — transparent */
+    .site-nav.on-hero { background: transparent; }
+    /* Over light content — frosted white */
+    .site-nav.on-content {
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 24px rgba(45,49,50,0.08);
+    }
+    .nav-logo-new {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px; font-weight: 800;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .on-hero .nav-logo-new { color: #fff; }
+    .on-content .nav-logo-new { color: #2D3132; }
+    .nav-links-new {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav-links-new a {
+      font-size: 13px; font-weight: 500;
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: color 0.2s, opacity 0.2s;
+    }
+    .on-hero .nav-links-new a { color: rgba(255,255,255,0.75); }
+    .on-hero .nav-links-new a:hover { color: #fff; opacity: 1; }
+    .on-content .nav-links-new a { color: #6A6560; }
+    .on-content .nav-links-new a:hover { color: #2D3132; }
+    .nav-cta-new {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px; border-radius: 100px;
+      font-size: 13px; font-weight: 700;
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .on-hero .nav-cta-new { background: #fff; color: #C2633C; }
+    .on-hero .nav-cta-new:hover { background: rgba(255,255,255,0.9); transform: translateY(-1px); }
+    .on-content .nav-cta-new { background: #2D3132; color: #F5EDE5; }
+    .on-content .nav-cta-new:hover { background: #C2633C; transform: translateY(-1px); }
+    /* Mobile: hide nav-links, show burger */
+    .nav-burger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-burger span {
+      display: block; width: 22px; height: 2px;
+      border-radius: 2px; transition: transform 0.3s, opacity 0.2s;
+    }
+    .on-hero .nav-burger span { background: #fff; }
+    .on-content .nav-burger span { background: #2D3132; }
+    @media (max-width: 900px) {
+      .nav-links-new { display: none; }
+      .nav-burger { display: flex; }
+      .site-nav { padding: 16px 24px; }
+    }
+
+    /* ════ STICKY HERO + SLIDE-OVER EFFECT ════ */
+    #hero {
+      position: sticky !important;
+      top: 0;
+      z-index: 1;
+      height: 100vh;
+    }
+    /* All content sections stack on top of the fixed hero */
+    #logos, #stats, #about, #traj, #experience,
+    #skills, #mentorship, #featured, #education,
+    #recommendations, #booking, #cta {
+      position: relative;
+      z-index: 10;
+    }
+    /* First section gets rounded top to look like a card sliding over */
+    #logos {
+      border-radius: 24px 24px 0 0;
+      box-shadow: 0 -4px 40px rgba(45,49,50,0.15);
+    }
+
     /* ════ SHARED NEW SECTION STYLES ════ */
     .ns-section { padding: 100px 80px; }
     .ns-section.dark { background: #2D3132; }
@@ -443,6 +529,22 @@
 
 
 <!-- ═══ HERO ═══ -->
+<nav class="site-nav on-hero" id="site-nav">
+  <a href="#hero" class="nav-logo-new">Stefan Dorfling</a>
+  <ul class="nav-links-new">
+    <li><a href="#stats">Impact</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#featured">Featured</a></li>
+    <li><a href="#recommendations">Recommendations</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta-new">Book a Call</a>
+  <button class="nav-burger" id="nav-burger-new" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
 <section id="hero">
   <div class="hero-watermark">STEFAN DORFLING</div>
   <div class="hero-content">
@@ -1616,6 +1718,38 @@ document.addEventListener('keydown', function(e) {
   track.addEventListener('mouseleave',function(){down=false;track.style.cursor='grab';});
   track.addEventListener('mouseup',function(){down=false;track.style.cursor='grab';});
   track.addEventListener('mousemove',function(e){if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx)*1.2;});
+})();
+</script>
+
+
+<script>
+(function(){
+  var nav = document.getElementById('site-nav');
+  var hero = document.getElementById('hero');
+  if(!nav || !hero) return;
+
+  function updateNav(){
+    var heroBottom = hero.getBoundingClientRect().bottom;
+    if(heroBottom > 80){
+      nav.classList.add('on-hero');
+      nav.classList.remove('on-content');
+    } else {
+      nav.classList.remove('on-hero');
+      nav.classList.add('on-content');
+    }
+  }
+  window.addEventListener('scroll', updateNav, {passive:true});
+  updateNav();
+
+  // Smooth anchor scrolling
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var t = document.querySelector(a.getAttribute('href'));
+      if(!t) return;
+      e.preventDefault();
+      t.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
 })();
 </script>
 
